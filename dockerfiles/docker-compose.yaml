@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  node:
+    build: ./DockerFile.node-keystone
+    image: leilaalgarve/docker-keystone
+    container_name: keystone
+    networks:
+      - blog-net
+    volumes:
+      - /home/leila/blog-container/leilacodes:/leilacodes
+    tty: true
+
+
+networks:
+  blog-net:
