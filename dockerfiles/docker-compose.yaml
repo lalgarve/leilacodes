@@ -11,6 +11,27 @@ services:
       - /home/leila/blog-container/leilacodes:/leilacodes
     tty: true
 
+  db:
+    image: postgres:14.5
+    container_name: postgres
+    networks:
+      - blog-net
+    volumes:
+      - postgres14:/var/lib/postgresql/data
+    tty: true    
+
+  pgadmin4:
+    image: dpage/pgadmin4
+    container_name: pgadmin4
+    networks:
+      - blog-net
+    volumes:
+      - postgres14-backup:/usr/local/pgsql-14
+    tty: true  
+
+volumes:
+  postgres14:
+  postgres14-backup:
 
 networks:
   blog-net:
