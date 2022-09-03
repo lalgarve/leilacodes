@@ -8,9 +8,41 @@ services:
     networks:
       - blog-net
     volumes:
-      - /home/leila/blog-container/leilacodes:/leilacodes
+      - ../cms:/cms
     tty: true
 
+  db:
+    image: postgres:14.5
+    container_name: postgres
+    env_file:
+      - postgres.env
+    networks:
+      - blog-net
+    volumes:
+      - postgres14:/var/lib/postgresql/data
+    tty: true    
+
+  pgadmin4:
+    image: dpage/pgadmin4
+    container_name: pgadmin4
+    env_file:
+      - pgadmin.env
+    networks:
+      - blog-net
+    ports:
+      - 80:80
+    volumes:
+      - postgres14-backup:/usr/local/pgsql-14
+      - ./servers.json:/pgadmin4/servers.json
+      - pgadmin4:/var/lib/pgadmin
+      - ./pgadmin-files/:/usr/local/pgadmin-files
+
+    tty: true  
+
+volumes:
+  postgres14:
+  postgres14-backup:
+  pgadmin4:
 
 networks:
   blog-net:
